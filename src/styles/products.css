@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Text:ital,wght@0,300..700;1,300..700&display=swap');
+
+:root {
+    --primary-color: hsl(14, 86%, 42%);
+    --secondary-color: hsl(14, 65%, 9%);
+    --font-weight: 700;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html {
+    font-size: 16px;
+    line-height: 1.5;
+    font-family: RedHatText;
+}
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+button {
+    cursor: pointer;
+}
+.Products {
+    display: flex;
+    gap: 30px;
+}
+.product-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.row {
+    display: flex;
+    gap: 20px;
+}
+.product-cart {
+    width: calc((100% / 4) + 25%);
+    height: 100vh;
+}
+.hidden {
+    display: none;
+}
+.img-box {
+    position: relative;
+    margin-bottom: 24px;
+}
+.img-box > img {
+    border-radius: 14px;
+}
+.product-description {
+    text-align: left;
+}
+.product-description > h2 {
+    font-size: 16px;
+    color: hsl(14, 25%, 72%);
+    font-weight: 500;
+}
+.product-description > h3 {
+    font-size: 20px;
+    color: hsl(14, 65%, 9%);
+    /* padding: 4px 0; */
+}
+.product-description > p {
+    color: var(--primary-color);
+    font-weight: var(--font-weight);
+}
+.addtocart {
+    border-radius: 20px;
+    width: calc((100% / 2) + 15%);
+    position: absolute;
+    display: flex;
+    align-items: center;
+    background: white;
+    color: var(--secondary-color);
+    font-weight: var(--font-weight);
+    padding: 8px;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    justify-content: center;
+    border: 1px solid hsla(14, 65%, 9%, 0.4);
+}
+.addtocart > svg {
+    margin-right: 2px;
+}
+@media (max-width: 768px) {
+    .Products {
+        flex-direction: column;
+    }
+    .product-container {
+        flex-direction: column;
+    }
+    .row {
+        flex-direction: column;
+    }
+    .product-cart {
+        width: 100%;
+    }
+    /* .hidden {
+        display: block;
+    } */
+}
+/* @media (width: 768px) {
+    .product-description > h3 {
+        font-size: 16px;
+        line-height: 24px;
+    }
+} */
