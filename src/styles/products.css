@@ -36,10 +36,6 @@ button {
     display: flex;
     gap: 20px;
 }
-.product-cart {
-    width: calc((100% / 4) + 25%);
-    height: 100vh;
-}
 .hidden {
     display: none;
 }
@@ -69,7 +65,7 @@ button {
 }
 .addtocart {
     border-radius: 20px;
-    width: calc((100% / 2) + 15%);
+    width: calc((100% / 2) + 10%);
     position: absolute;
     display: flex;
     align-items: center;
@@ -85,6 +81,53 @@ button {
 }
 .addtocart > svg {
     margin-right: 2px;
+}
+.addtocart:hover {
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+}
+.onclick-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--primary-color);
+    color: white;
+    border: 1px solid var(--primary-color);
+    border-radius: 20px;
+    width: calc((100% / 2) + 10%);
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px 14px;
+}
+.onclick-btn > div {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.onclick-btn > div:hover {
+    background-color: white;
+}
+.onclick-btn > div:hover path {
+    fill: var(--primary-color);
+}
+.product-cart {
+    width: calc((100% / 4) + 25%);
+    height: 100vh;
+    background: white;
+    padding: 1em;
+    border-radius: 12px;
+}
+.product-cart h2 {
+    text-align: left;
+    color: var(--primary-color);
+    margin-bottom: 12px;
+    font-size: 1.25rem;
 }
 @media (max-width: 768px) {
     .Products {
@@ -103,9 +146,9 @@ button {
         display: block;
     } */
 }
-/* @media (width: 768px) {
-    .product-description > h3 {
-        font-size: 16px;
-        line-height: 24px;
+@media (width: 768px) {
+    .addtocart {
+        width: calc(100% / 3);
+        left: 35%;
     }
-} */
+}
