@@ -9,19 +9,25 @@ import Cart from "../components/Cart.js";
 // import Wafflemobile from "../images/Wafflemobile.jpg";
 
 export default function Products() {
-    // const [displayButton, setDisplayButton] = useState(false)
-    // const [count, setCount] = useState(0);
+    const [displayButton, setDisplayButton] = useState(false)
+    const [count, setCount] = useState(0);
     
 
-    // const handleAddProduct = () => {
-    //     setDisplayButton(true)
-    // }
-    // const handleDecrement = () => {
-    //     setCount(count - 1)
-    // }
-    // const handleIncrement = () => {
-    //   setCount(count + 1);
-    // };
+    const handleAddProduct = () => {
+        setDisplayButton(true)
+    }
+    const handleDecrement = () => {
+        if (count <= 0) {
+        setCount(0)
+        }
+        else {
+            setCount(count - 1);
+        }
+        
+    }
+    const handleIncrement = () => {
+      setCount(count + 1);
+    };
     return (
       <div className="Product">
         <div className="product-container">
@@ -37,7 +43,7 @@ export default function Products() {
                 <h3>{product.category}</h3>
                 <p>${product.price.toFixed(2)}</p>
               </div>
-              <button className='addtocart'>
+              <button className="addtocart" onClick={handleAddProduct}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="21"
@@ -55,8 +61,40 @@ export default function Products() {
                     </clipPath>
                   </defs>
                 </svg>
-                Add to Cart
+                <span>Add to Cart</span>
               </button>
+              {displayButton && (
+                <button className="onclick-btn">
+                  <div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="10"
+                      height="2"
+                      fill="none"
+                      viewBox="0 0 10 2"
+                      onClick={handleDecrement}
+                    >
+                      <path fill="#fff" d="M0 .375h10v1.25H0V.375Z" />
+                    </svg>
+                  </div>
+                  <span>{count}</span>
+                  <div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="10"
+                      height="10"
+                      fill="none"
+                      viewBox="0 0 10 10"
+                      onClick={handleIncrement}
+                    >
+                      <path
+                        fill="#fff"
+                        d="M10 4.375H5.625V0h-1.25v4.375H0v1.25h4.375V10h1.25V5.625H10v-1.25Z"
+                      />
+                    </svg>
+                  </div>
+                </button>
+              )}
             </div>
           ))}
         </div>

@@ -12,8 +12,8 @@ function App() {
   // }
   return (
     <div className="App">
+      <h1 style={{textAlign: "left", marginBottom: "8px", color: "hsl(14, 65%, 9%)"}}>Desserts</h1>
       <Products />
-      {/* <Cart cart={cart} /> */}
     </div>
   );
 }
