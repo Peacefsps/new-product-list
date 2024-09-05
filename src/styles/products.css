@@ -23,6 +23,9 @@ img {
 button {
     cursor: pointer;
 }
+ul {
+    list-style-type: none;
+}
 .Product {
     display: flex;
     gap: 30px;
@@ -115,7 +118,6 @@ button {
     font-size: 1.25rem;
 }
 .cart-items > ul {
-    list-style-type: none;
     text-align: left;
     padding-left: 0;
 }
@@ -185,7 +187,61 @@ button {
 }
 .confirmation-modal {
     padding: 28px;
+    text-align: left;
+    width: calc((100% / 3) + 5%);
+    background: white;
+    position: absolute;
+    z-index: 1;
+    top: 10%;
+    right: 35%;
+        /* overflow: auto; */
 }
+/* .confirmation-modal > svg path {
+    border-radius: 20px;
+} */
+.confirmation-modal > h2 {
+    color: var(--secondary-color);
+    font-size: 30px;
+    margin: 0;
+}
+.confirmation-modal > p {
+    color: hsl(12, 20%, 44%);
+    margin-bottom: 24px;
+}
+.final-order {
+    background-color: hsl(20, 50%, 98%);
+    padding: 20px;
+    border-radius: 8px;
+}
+.order-list {
+    display: flex;
+    margin-bottom: 12px;
+    justify-content: space-between;
+    border-bottom: 2px solid hsl(13, 31%, 94%);
+    padding-bottom: 8px;
+}
+.order-description {
+    margin-left: 16px;
+}
+.order-description > h2 {
+    color: var(--secondary-color);
+    margin: 0;
+    line-height: 22px;
+    font-size: 16px;
+    text-align: left;
+}
+/* .order-description:nth-child(3) {
+    text-align: right;
+    margin-left: auto;
+} */
+ .confirmation-modal > button {
+    background-color: var(--primary-color);
+    width: 100%;
+    border-radius: 26px;
+    padding: 14px;
+    color: white;
+    border: transparent;
+ }
 @media (max-width: 768px) {
     .Product {
         flex-direction: column;
@@ -199,6 +255,9 @@ button {
         flex-direction: column;
     }
     .cart-box {
+        width: 100%;
+    }
+    .confirmation-modal {
         width: 100%;
     }
 }

@@ -3,36 +3,64 @@ import '../styles/products.css';
 import data from '../data.json';
 import Cart from "../components/Cart.js";
 
-
-// import Waffledesktop from '../images/Waffledesktop.jpg';
-// import Waffletablet from "../images/Waffletablet.jpg";
-// import Wafflemobile from "../images/Wafflemobile.jpg";
-
 export default function Products() {
-    const [displayButton, setDisplayButton] = useState(false)
-    const [count, setCount] = useState(0);
+    const [displayButton, setDisplayButton] = useState({})
+    // const [count, setCount] = useState(0);
+    const [cart, setCart] = useState([])
+    const [products] = useState(data);
     
 
-    const handleAddProduct = () => {
-        setDisplayButton(true)
+    const handleAddProduct = (product) => {
+        setDisplayButton(prev => ({
+          ...prev,
+          [product.id]: true,
+          // const updatedDisplay = { [product.id]: !prev[product.id] };
+          // return updatedDisplay;
+        }));
+        const existingProduct = cart.find(item => item.product.id === product.id)
+        if (existingProduct) {
+          setCart(cart.map(item =>
+            item.product.id === product.id ? {...item, quantity: item.quantity + 1} : item
+          ));
+        } else {
+          setCart([...cart, {product, quantity: 1}])
+        }
+        // setCount(1)
+        // setCart([...cart, product]);
     }
-    const handleDecrement = () => {
-        if (count <= 0) {
-        setCount(0)
-        }
-        else {
-            setCount(count - 1);
-        }
+    const handleDecrement = (product) => {
+      const existingProduct = cart.find(item => item.product.id === product.id);
+      if (existingProduct && existingProduct.quantity > 1) {
+        setCart(cart.map(item =>
+          item.product.id === product.id ? {...item, quantity: item.quantity - 1} : item
+        ));
+      }
+      else {
+        setCart(cart.filter(item => item.product.id !== product.id));
+        setDisplayButton(prev => ({...prev, [product.id] : false
+        }))
+      }
+        // if (count <= 0) {
+        // setCount(0)
+        // }
+        // else {
+        //     setCount(count - 1);
+        // }
         
     }
-    const handleIncrement = () => {
-      setCount(count + 1);
+
+    const handleIncrement = (product) => {
+      setCart(cart.map(item =>
+        item.product.id === product.id ? {...item, quantity: item.quantity + 1} : item
+      ))
+      // setCount(count + 1);
     };
+    
     return (
       <div className="Product">
         <div className="product-container">
-          {data.map((product, index) => (
-            <div key={index}>
+          {products.map((product) => (
+            <div key={product.id}>
               <img
                 src={product.image.desktop}
                 alt={product.name}
@@ -43,7 +71,7 @@ export default function Products() {
                 <h3>{product.category}</h3>
                 <p>${product.price.toFixed(2)}</p>
               </div>
-              <button className="addtocart" onClick={handleAddProduct}>
+              <button className="addtocart" onClick={() => handleAddProduct(product)}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="21"
@@ -63,21 +91,21 @@ export default function Products() {
                 </svg>
                 <span>Add to Cart</span>
               </button>
-              {displayButton && (
+              {displayButton[product.id] && (
                 <button className="onclick-btn">
                   <div>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="10"
-                      height="2"
+                      height="2"k
                       fill="none"
                       viewBox="0 0 10 2"
-                      onClick={handleDecrement}
+                      onClick={() => handleDecrement(product)}
                     >
                       <path fill="#fff" d="M0 .375h10v1.25H0V.375Z" />
                     </svg>
                   </div>
-                  <span>{count}</span>
+                  <span>{cart.find(item => item.product.id === product.id)?.quantity || 0}</span>
                   <div>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -85,7 +113,7 @@ export default function Products() {
                       height="10"
                       fill="none"
                       viewBox="0 0 10 10"
-                      onClick={handleIncrement}
+                      onClick={() => handleIncrement(product)}
                     >
                       <path
                         fill="#fff"
@@ -98,7 +126,7 @@ export default function Products() {
             </div>
           ))}
         </div>
-        <Cart />
+        <Cart setDisplayButton={setDisplayButton} cart={cart} setCart={setCart} />
       </div>
     );
 }

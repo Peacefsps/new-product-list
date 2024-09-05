@@ -5,11 +5,7 @@ import Products from './components/Products.js';
 
 function App() {
 
-  // const [cart, setCart] = useState([])
-
-  // const addToCart = (product) => {
-  //   setCart((prevCart) => [...prevCart, product]);
-  // }
+  
   return (
     <div className="App">
       <h1 style={{textAlign: "left", marginBottom: "8px", color: "hsl(14, 65%, 9%)"}}>Desserts</h1>
