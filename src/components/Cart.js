@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 
 export default function Cart({cart, setCart, setDisplayButton}) {
-    const [displayModal, setDisplatModal] = useState(false)
+    const [displayModal, setDisplayModal] = useState(false)
     
     const handleSubmitOrder = () => {
-        setDisplatModal(true)
+        setDisplayModal(true)
     }
     const handleOrderReset = () => {
       setCart([]);
       setDisplayButton(false)
-      setDisplatModal(false)
+      setDisplayModal(false)
     }
     const handleRemoveItem = (index) => {
       const updatedCart = cart.filter((_, i) => i !== index);
