@@ -1,28 +1,34 @@
 import React, { useState } from 'react';
 
-export default function Cart({cart, setCart, setDisplayButton}) {
-    const [displayModal, setDisplayModal] = useState(false)
-    
+export default function Cart({cart, products, setCart, setDisplayButton, displayButton}) {
+    const [displayModal, setDisplayModal] = useState(false);
+
     const handleSubmitOrder = () => {
-        setDisplayModal(true)
-    }
+      setDisplayModal(true);
+    };
     const handleOrderReset = () => {
       setCart([]);
-      setDisplayButton(false)
-      setDisplayModal(false)
-    }
-    const handleRemoveItem = (index) => {
-      const updatedCart = cart.filter((_, i) => i !== index);
-      setCart(updatedCart)
-    }
-    const orderTotal = cart
-      .reduce((total, item) => total + item.price * item.quantity, 0)
-      ;
-
-
+      setDisplayButton(null);
+      setDisplayModal(false);
+    };
+    const handleRemoveItem = (product) => {
+      const updatedCart = cart.filter((item) => item.product.id !== product.id);
+      // setCart(cart.filter((item) => item.product.id !== product.id))
+      setCart(updatedCart);
+      if (displayButton === product.id) {
+        setDisplayButton(null);
+      }
+    };
+    const orderTotal = cart.reduce(
+      (total, item) => total + item.product.price * item.quantity,
+      0
+    );
     return (
       <div className="cart-box">
-        <h2>Your Cart ({cart.length})</h2>
+        <h2>
+          Your Cart (
+          {cart.find((item) => item.product.id === products.id)?.quantity || 0})
+        </h2>
         {cart.length === 0 ? (
           <div>
             <svg
@@ -51,8 +57,8 @@ export default function Cart({cart, setCart, setDisplayButton}) {
               />
               <path
                 stroke="#fff"
-                stroke-Linecap="round"
-                stroke-Linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 strokeWidth=".974"
                 d="m81.076 28.966 34.187-4.16"
               />
@@ -74,8 +80,8 @@ export default function Cart({cart, setCart, setDisplayButton}) {
               />
               <path
                 stroke="#fff"
-                stroke-Linecap="round"
-                stroke-Linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 strokeWidth=".974"
                 d="M9.796 52.06c-.667 5.866 16.24 12.586 37.733 15.04 14.774 1.68 27.867.906 34.854-1.654"
               />
@@ -85,25 +91,29 @@ export default function Cart({cart, setCart, setDisplayButton}) {
         ) : (
           <div className="cart-items">
             <ul>
-              {cart.map((item, index) => (
-                <li key={index}>
-                  <span>{item.name}</span>
-
+              {products.map((product) => (
+                <li key={product.name}>
+                  <span>{product.name}</span>
                   <div className="cart-summary">
                     <div>
                       <span style={{ color: "hsl(14, 86%, 42%)" }}>
-                        {item.quantity}x
+                        {cart.find((item) => item.product.id === product.id)
+                          ?.quantity || 0}
+                        x
                       </span>
                       <span style={{ color: "hsl(7, 20%, 60%)" }}>
-                        @ ${item.price}
+                        @ ${product.price.toFixed(2)}
                       </span>
                       <span style={{ color: "hsl(12, 20%, 44%)" }}>
-                        ${(item.price * item.quantity)}
+                        $
+                        {product.price *
+                          cart.find((item) => item.product.id === product.id)
+                            ?.quantity || (0).toFixed(2)}
                       </span>
                     </div>
                     <div
                       className="remove-icon"
-                      onClick={() => handleRemoveItem(index)}
+                      onClick={() => handleRemoveItem(product)}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -172,15 +182,12 @@ export default function Cart({cart, setCart, setDisplayButton}) {
             <p>We hope you enjoy your food</p>
             <div className="final-order">
               <ul>
-                {cart.map((item, index) => (
-                  <li key={index} className="order-list">
+                {products.map((product) => (
+                  <li key={product.name} className="order-list">
                     <div style={{ display: "flex" }}>
-                      <img
-                        src={item.image?.thumbnail || "default-thumbnail.jpg"}
-                        alt={item.name}
-                      />
+                      <img src={product.image.thumbnail} alt={product.name} />
                       <div className="order-description">
-                        <h2>{item.name}</h2>
+                        <h2>{product.name}</h2>
                         <p>
                           <span
                             style={{
@@ -188,16 +195,20 @@ export default function Cart({cart, setCart, setDisplayButton}) {
                               marginRight: "6px",
                             }}
                           >
-                            {item.quantity}x
+                            {cart.find((item) => item.product.id === product.id)
+                              ?.quantity || 0}
+                            x
                           </span>
                           <span style={{ color: "hsla(14, 65%, 9%, 0.5)" }}>
-                            @{item.price}
+                            @{product.price.toFixed(2)}
                           </span>
                         </p>
                       </div>
                     </div>
                     <p style={{ color: "hsl(14, 65%, 9%)" }}>
-                      {(item.price * item.quantity)}
+                      {product.price *
+                        cart.find((item) => item.product.id === product.id)
+                          ?.quantity || (0).toFixed(2)}
                     </p>
                   </li>
                 ))}
