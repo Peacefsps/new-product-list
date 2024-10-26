@@ -61,7 +61,7 @@ export default function OrderSummary({cart, setCart, setDisplayButton, setDispla
             </ul>
             <div className="order-total">
               <p>Order Total</p>
-              <h3>${orderTotal}</h3>
+              <h3>${(orderTotal).toFixed(2)}</h3>
             </div>
           </div>
           <button onClick={handleOrderReset}>Start New Order</button>

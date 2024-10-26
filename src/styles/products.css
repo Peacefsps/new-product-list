@@ -89,10 +89,8 @@ ul {
     left: 23%;
     padding: 0.52rem 0.70rem;
     width: calc((100%/3) + 20.5%);
+    /* pointer-events: auto; */
 }
-/* .onclick-btn:focus {
-    fill: var(--primary-color);
-} */
 .onclick-btn > div {
     width: 20px;
     height: 20px;
@@ -101,6 +99,10 @@ ul {
     display: flex;
     align-items: center;
     justify-content: center;
+    pointer-events: auto;
+}
+.onclick-btn span {
+    pointer-events: none;
 }
 .onclick-btn > div:hover {
     background-color: white;

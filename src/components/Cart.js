@@ -127,7 +127,7 @@ export default function Cart({cart, products, setCart, setDisplayButton, display
             </ul>
             <div className="order-total">
               <p>Order Total</p>
-              <h3>${orderTotal}</h3>
+              <h3>${(orderTotal).toFixed(2)}</h3>
             </div>
             <div className="carbon-neutral">
               <svg

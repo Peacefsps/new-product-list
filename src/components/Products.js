@@ -105,14 +105,13 @@ export default function Products() {
             </button>
             {displayButton[product.id] && (
               <button className="onclick-btn">
-                <div>
+                <div onClick={() => handleDecrement(product)}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="10"
                     height="2"
                     fill="none"
                     viewBox="0 0 10 2"
-                    onClick={() => handleDecrement(product)}
                   >
                     <path fill="#fff" d="M0 .375h10v1.25H0V.375Z" />
                   </svg>
@@ -121,14 +120,13 @@ export default function Products() {
                   {cart.find((item) => item.product.id === product.id)
                     ?.quantity || 0}
                 </span>
-                <div>
+                <div onClick={() => handleIncrement(product)}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="10"
                     height="10"
                     fill="none"
                     viewBox="0 0 10 10"
-                    onClick={() => handleIncrement(product)}
                   >
                     <path
                       fill="#fff"
@@ -141,7 +139,13 @@ export default function Products() {
           </div>
         ))}
       </div>
-      <Cart setDisplayButton={setDisplayButton} displayButton={displayButton} cart={cart} setCart={setCart} products={products} />
+      <Cart
+        setDisplayButton={setDisplayButton}
+        displayButton={displayButton}
+        cart={cart}
+        setCart={setCart}
+        products={products}
+      />
     </div>
   );
 }
