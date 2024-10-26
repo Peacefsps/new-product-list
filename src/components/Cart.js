@@ -12,18 +12,20 @@ export default function Cart({cart, products, setCart, setDisplayButton, display
       const updatedCart = cart.filter((item) => item.product.id !== product.id);
       setCart(updatedCart);
       if (displayButton === product.id) {
-        setDisplayButton(null);
+        setDisplayButton({});
       }
     };
+
     const orderTotal = cart.reduce(
       (total, item) => total + item.product.price * item.quantity,
       0
     );
+    
     return (
       <div className="cart-box">
         <h2>
           Your Cart (
-          {cart.find((item) => item.product.id === products.id)?.quantity || 0})
+          {cart.length})
         </h2>
         {cart.length === 0 ? (
           <div>

@@ -45,8 +45,6 @@ export default function OrderSummary({cart, setCart, setDisplayButton, setDispla
                             marginRight: "6px",
                           }}
                         >
-                          {/* {cart.find((item) => item.product.id === item.product.id)
-                              ?.quantity || 0} */}
                           {item.quantity}x
                         </span>
                         <span style={{ color: "hsla(14, 65%, 9%, 0.5)" }}>
