@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import OrderSummary from './OrderSummary';
 
 export default function Cart({cart, products, setCart, setDisplayButton, displayButton}) {
     const [displayModal, setDisplayModal] = useState(false);
@@ -6,14 +7,9 @@ export default function Cart({cart, products, setCart, setDisplayButton, display
     const handleSubmitOrder = () => {
       setDisplayModal(true);
     };
-    const handleOrderReset = () => {
-      setCart([]);
-      setDisplayButton(null);
-      setDisplayModal(false);
-    };
+   
     const handleRemoveItem = (product) => {
       const updatedCart = cart.filter((item) => item.product.id !== product.id);
-      // setCart(cart.filter((item) => item.product.id !== product.id))
       setCart(updatedCart);
       if (displayButton === product.id) {
         setDisplayButton(null);
@@ -91,29 +87,24 @@ export default function Cart({cart, products, setCart, setDisplayButton, display
         ) : (
           <div className="cart-items">
             <ul>
-              {products.map((product) => (
-                <li key={product.name}>
-                  <span>{product.name}</span>
+              {cart.map((item) => (
+                <li key={item.product.id}>
+                  <span>{item.product.name}</span>
                   <div className="cart-summary">
                     <div>
                       <span style={{ color: "hsl(14, 86%, 42%)" }}>
-                        {cart.find((item) => item.product.id === product.id)
-                          ?.quantity || 0}
-                        x
+                        {item.quantity}x
                       </span>
                       <span style={{ color: "hsl(7, 20%, 60%)" }}>
-                        @ ${product.price.toFixed(2)}
+                        @ ${item.product.price.toFixed(2)}
                       </span>
                       <span style={{ color: "hsl(12, 20%, 44%)" }}>
-                        $
-                        {product.price *
-                          cart.find((item) => item.product.id === product.id)
-                            ?.quantity || (0).toFixed(2)}
+                        ${(item.product.price * item.quantity).toFixed(2)}
                       </span>
                     </div>
                     <div
                       className="remove-icon"
-                      onClick={() => handleRemoveItem(product)}
+                      onClick={() => handleRemoveItem(item.product)}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -161,65 +152,13 @@ export default function Cart({cart, products, setCart, setDisplayButton, display
           </div>
         )}
         {displayModal && (
-          <div className="confirmation-modal">
-            <svg
-              width="28"
-              height="28"
-              viewBox="0 0 48 48"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M21 32.121L13.5 24.6195L15.6195 22.5L21 27.879L32.3775 16.5L34.5 18.6225L21 32.121Z"
-                fill="#1EA575"
-              />
-              <path
-                d="M24 3C19.8466 3 15.7865 4.23163 12.333 6.53914C8.8796 8.84665 6.18798 12.1264 4.59854 15.9636C3.0091 19.8009 2.59323 24.0233 3.40352 28.0969C4.21381 32.1705 6.21386 35.9123 9.15077 38.8492C12.0877 41.7861 15.8295 43.7862 19.9031 44.5965C23.9767 45.4068 28.1991 44.9909 32.0364 43.4015C35.8736 41.812 39.1534 39.1204 41.4609 35.667C43.7684 32.2135 45 28.1534 45 24C45 18.4305 42.7875 13.089 38.8493 9.15076C34.911 5.21249 29.5696 3 24 3ZM24 42C20.4399 42 16.9598 40.9443 13.9997 38.9665C11.0397 36.9886 8.73256 34.1774 7.37018 30.8883C6.0078 27.5992 5.65134 23.98 6.34587 20.4884C7.04041 16.9967 8.75474 13.7894 11.2721 11.2721C13.7894 8.75473 16.9967 7.0404 20.4884 6.34587C23.98 5.65133 27.5992 6.00779 30.8883 7.37017C34.1774 8.73255 36.9886 11.0397 38.9665 13.9997C40.9443 16.9598 42 20.4399 42 24C42 28.7739 40.1036 33.3523 36.7279 36.7279C33.3523 40.1036 28.7739 42 24 42Z"
-                fill="#1EA575"
-              />
-            </svg>
-            <h2>Order Confirmed</h2>
-            <p>We hope you enjoy your food</p>
-            <div className="final-order">
-              <ul>
-                {products.map((product) => (
-                  <li key={product.name} className="order-list">
-                    <div style={{ display: "flex" }}>
-                      <img src={product.image.thumbnail} alt={product.name} />
-                      <div className="order-description">
-                        <h2>{product.name}</h2>
-                        <p>
-                          <span
-                            style={{
-                              color: "hsl(14, 86%, 42%)",
-                              marginRight: "6px",
-                            }}
-                          >
-                            {cart.find((item) => item.product.id === product.id)
-                              ?.quantity || 0}
-                            x
-                          </span>
-                          <span style={{ color: "hsla(14, 65%, 9%, 0.5)" }}>
-                            @{product.price.toFixed(2)}
-                          </span>
-                        </p>
-                      </div>
-                    </div>
-                    <p style={{ color: "hsl(14, 65%, 9%)" }}>
-                      {product.price *
-                        cart.find((item) => item.product.id === product.id)
-                          ?.quantity || (0).toFixed(2)}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-              <div className="order-total">
-                <p>Order Total</p>
-                <h3>${orderTotal}</h3>
-              </div>
-            </div>
-            <button onClick={handleOrderReset}>Start New Order</button>
-          </div>
+          <OrderSummary
+            cart={cart}
+            setCart={setCart}
+            setDisplayButton={setDisplayButton}
+            setDisplayModal={setDisplayModal}
+            orderTotal={orderTotal}
+          />
         )}
       </div>
     );

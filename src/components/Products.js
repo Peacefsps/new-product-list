@@ -4,13 +4,17 @@ import data from '../data.json';
 import Cart from "../components/Cart.js";
 
 export default function Products() {
-  const [displayButton, setDisplayButton] = useState(null);
+  const [displayButton, setDisplayButton] = useState({});
   const [cart, setCart] = useState([]);
   const [products] = useState(data);
   console.log(products);
 
   const handleAddProduct = (productId) => {
-    setDisplayButton(productId);
+    setDisplayButton((prevState) => ({
+      ...prevState,
+      [productId]: !prevState[productId],
+    }))
+
     const existingProduct = cart.find((item) => item.product.id === productId);
     if (existingProduct) {
       setCart(
@@ -27,6 +31,12 @@ export default function Products() {
 
   const handleDecrement = (product) => {
     const existingProduct = cart.find((item) => item.product.id === product.id);
+
+    setDisplayButton((prevButton) => ({
+      ...prevButton,
+      quantity: Math.max(prevButton.quantity - 1, 0)
+    }))
+
     if (existingProduct && existingProduct.quantity > 1) {
       setCart(
         cart.map((item) =>
@@ -37,10 +47,11 @@ export default function Products() {
       );
     } else {
       setCart(cart.filter((item) => item.product.id !== product.id));
-      if (displayButton === product.id) {
-        setDisplayButton(null);
+      setDisplayButton((prevState) => ({
+        ...prevState,
+        [product.id]: false
+      }))
       }
-    }
   };
 
   const handleIncrement = (product) => {
@@ -51,7 +62,7 @@ export default function Products() {
           : item
       )
     );
-  };
+  }
 
   
   return (
@@ -92,7 +103,7 @@ export default function Products() {
               </svg>
               <span>Add to Cart</span>
             </button>
-            {displayButton === product.id && (
+            {displayButton[product.id] && (
               <button className="onclick-btn">
                 <div>
                   <svg

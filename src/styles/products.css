@@ -15,11 +15,6 @@ body {
     padding: 30px 36px;
     background: hsl(20, 50%, 98%);
 }
-html {
-    font-size: 16px;
-    line-height: 1.5;
-    font-family: RedHatText;
-}
 img {
     max-width: 100%;
     height: auto;
